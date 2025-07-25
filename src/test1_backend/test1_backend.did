@@ -1,3 +1,4 @@
 service : {
-    "greet": (text) -> (text) query;
+  "generate_code": () -> (text) query;
+  "validate_code": (text) -> (bool);
 }
