@@ -1,21 +1,556 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
-  <title>IC Hello Starter</title>
-  <base href="/" />
-  <link rel="icon" href="/favicon.ico" />
+<meta charset="UTF-8" />
+<title>Trustoo | للثقة عنوان</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+<!-- مكتبة AOS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Cairo', sans-serif;
+    /* إضافة الصورة كخلفية */
+    background-image: url('34954.jpg'); /* تأكد من مسار الصورة الصحيح */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* لتثبيت الخلفية عند التمرير */
+    background-repeat: no-repeat;
+    /* تراكب لوني لضمان وضوح النصوص فوق الصورة */
+    background-color: rgba(26, 0, 51, 0.7); /* لون داكن مع شفافية */
+    background-blend-mode: multiply; /* يمزج اللون مع الصورة */
+
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* تأثير تظليل إضافي لجعل النصوص أكثر وضوحًا فوق الصورة */
+  body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 0, 51, 0.6), rgba(58, 0, 106, 0.6), rgba(253, 253, 150, 0.1));
+    z-index: -1; /* للتأكد من أنها تحت المحتوى ولكن فوق الصورة */
+  }
+
+  .site-name {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+    z-index: 999;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(253, 253, 150, 0.07);
+    animation: floatUpDown 8s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+  .circle:nth-child(1) { width: 120px; height: 120px; top: 10%; left: 5%; animation-delay: 0s; }
+  .circle:nth-child(2) { width: 100px; height: 100px; bottom: 10%; right: 15%; animation-delay: 2s; }
+  .circle:nth-child(3) { width: 200px; height: 200px; top: 50%; left: 50%; animation-delay: 4s; }
+  .circle:nth-child(4) { width: 150px; height: 150px; bottom: 30%; left: 30%; animation-delay: 1s; }
+  .circle:nth-child(5) { width: 90px; height: 90px; top: 30%; right: 25%; animation-delay: 3s; }
+  .circle:nth-child(6) { width: 70px; height: 70px; top: 20%; right: 40%; animation-delay: 1.5s; }
+  .circle:nth-child(7) { width: 130px; height: 130px; bottom: 20%; left: 60%; animation-delay: 2.5s; }
+
+  @keyframes floatUpDown {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .page-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1; /* للتأكد من ظهور المحتوى فوق الدوائر والخلفية */
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .welcome-hero h1 {
+    font-size: 2.4em;
+    margin: 0;
+  }
+
+  .welcome-hero p {
+    font-size: 1.2em;
+    color: #ccc;
+    margin-top: 8px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    z-index: 2;
+    position: relative;
+  }
+
+  .card {
+    background-color: rgba(28, 28, 28, 0.8); /* خلفية بطاقة شفافة */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(128, 0, 255, 0.5);
+    max-width: 450px; /* زيادة عرض البطاقة قليلاً */
+    width: 90%;
+    text-align: center;
+    z-index: 2;
+    transition: transform 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  h1 {
+    margin-bottom: 15px;
+    font-size: 1.8em;
+  }
+
+  label {
+    display: block;
+    margin-top: 15px; /* زيادة المسافة */
+    font-size: 1.1em;
+    text-align: right;
+  }
+
+  small {
+    display: block;
+    font-size: 0.8em;
+    color: #ccc;
+    margin-top: 3px;
+    text-align: right;
+  }
+
+  input {
+    width: calc(100% - 20px); /* Adjust width to account for padding */
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1em;
+    background-color: #333;
+    color: #fff;
+  }
+
+  button {
+    margin-top: 20px; /* زيادة المسافة */
+    padding: 12px 25px; /* زيادة حجم الزر */
+    font-size: 1.1em; /* زيادة حجم الخط */
+    background-color: #8000ff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    line-height: 1.5; /* لجعل النص داخل الزر متعدد الأسطر يظهر بشكل جيد */
+  }
+
+  button:hover {
+    background-color: #a64dff;
+    transform: scale(1.05);
+  }
+
+  .result-box {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 1.2em;
+  }
+
+  a.back-link {
+    margin-top: 30px; /* زيادة المسافة */
+    display: inline-block;
+    color: #ccc;
+    text-decoration: underline;
+    cursor: pointer; /* لجعلها تبدو كزر */
+  }
+
+  .why-trustoo-section {
+    margin-top: 80px;
+    padding: 40px 20px;
+    background-color: rgba(0,0,0,0.5); /* خلفية أكثر قتامة لزيادة الوضوح */
+    text-align: center;
+  }
+
+  .why-trustoo-section h2 {
+    font-size: 2em;
+    margin-bottom: 30px;
+  }
+
+  .why-trustoo-section h2 span {
+    display: block;
+    font-size: 0.8em;
+    color: #ccc;
+  }
+
+  .boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .box {
+    background-color: rgba(30, 0, 51, 0.8); /* خلفية بطاقة شفافة */
+    padding: 18px;
+    border-radius: 15px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    transition: transform 0.3s, opacity 0.6s;
+  }
+
+  .box:hover {
+    transform: translateY(-5px);
+  }
+
+  .box h3 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+
+  .box p {
+    font-size: 0.9em;
+    margin: 3px 0;
+  }
+
+  /* تصميم النوافذ المنبثقة (Pop-ups) */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .popup-content {
+    background-color: #1c1c1c;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(128, 0, 255, 0.7);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    transform: scale(0.8);
+    opacity: 0;
+    animation: popupAppear 0.3s forwards;
+  }
+
+  @keyframes popupAppear {
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .popup-content h2 {
+    margin-top: 0;
+    color: #fdfd96;
+  }
+
+  .popup-content p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .popup-content button {
+    background-color: #8000ff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .popup-content button:hover {
+    background-color: #a64dff;
+  }
+
+  /* تعديل زر الاختيار في الصفحة الرئيسية */
+  .selection-buttons button {
+    width: 200px; /* عرض ثابت للأزرار */
+    margin: 15px; /* مسافة بين الأزرار */
+  }
+  .selection-buttons button span {
+    font-size: 0.8em;
+    display: block; /* لجعل الترجمة في سطر جديد */
+    margin-top: 5px; /* مسافة بسيطة بين النص العربي والإنجليزي */
+    color: rgba(255, 255, 255, 0.8); /* لون أفتح قليلاً للترجمة */
+  }
+</style>
 </head>
-
 <body>
-  <div class="browser-warning">
-    ⚠️ If this page appears broken, try reloading. If the problem persists, try switching browsers; Chrome or
-    Firefox are recommended.
-  </div>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
-</body>
 
+<!-- دوائر خلفية -->
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+
+<!-- العنوان -->
+<div class="site-name">Trustoo | للثقة عنوان</div>
+
+<!-- الصفحة الأولى: الترحيب وزري الاختيار -->
+<div id="page1" class="page-section" data-aos="zoom-in">
+  <div class="welcome-hero">
+    <h1>مرحبًا بكم في Trustoo</h1>
+    <p>Welcome to Trustoo</p>
+  </div>
+  <div class="card" data-aos="fade-up">
+    <h1>اختر دورك<br><span style="font-size: 0.8em; color:#ccc;">Choose your role</span></h1>
+    <div class="selection-buttons">
+        <button onclick="showClientPage()">
+            أنا عميل<br><span style="font-size: 0.8em;">I am a Client</span>
+        </button>
+        <button onclick="showMerchantPage()">
+            أنا تاجر<br><span style="font-size: 0.8em;">I am a Merchant</span>
+        </button>
+    </div>
+  </div>
+</div>
+
+<!-- الصفحة الثانية: للعميل (إدخال المبلغ وتوليد الكود) -->
+<div id="page2" class="page-section hidden">
+    <div class="container">
+      <div class="card" data-aos="fade-up">
+        <h1>إرسال دفعة<br><span style="font-size: 0.8em; color:#ccc;">Send Payment</span></h1>
+        <label for="amountInput">ادخل المبلغ المطلوب تحويله | Enter Amount to be transferred</label>
+        <input type="number" id="amountInput" placeholder="مثلاً: 150">
+        <button onclick="generateCode()">إنشاء كود التحقق | Generate Verification Code</button>
+        <a onclick="showPage1()" class="back-link">🔙 العودة للصفحة الرئيسية | Back to Home Page</a>
+      </div>
+    </div>
+</div>
+
+<!-- الصفحة الثالثة: للتاجر (إدخال الكود والمقارنة) -->
+<div id="page3" class="page-section hidden">
+    <div class="container">
+      <div class="card" data-aos="fade-up">
+        <h1>التحقق من دفعة<br><span style="font-size: 0.8em; color:#ccc;">Verify Payment</span></h1>
+        <label for="codeInput">ادخل الكود المطلوب | Enter the required Code</label>
+        <input type="text" id="codeInput" placeholder="مثلاً: A1B2C3">
+        <button onclick="verifyCode()">تحقق من الكود | Verify Code</button>
+        <a onclick="showPage1()" class="back-link">🔙 العودة للصفحة الرئيسية | Back to Home Page</a>
+      </div>
+    </div>
+</div>
+
+<!-- ليه عملنا Trustoo (يمكن أن تظهر في أي صفحة أو في الصفحة الرئيسية فقط) -->
+<div class="why-trustoo-section">
+  <h2 data-aos="fade-down">✨ ليه عملنا Trustoo<br><span>Why we built Trustoo</span></h2>
+  <div class="boxes">
+    <div class="box" data-aos="fade-right">
+      <h3>سهولة الدفع</h3>
+      <p>نسهل عمليات الدفع بين التاجر والمشتري مباشرةً.</p>
+      <p><em>Easy payment process between merchants and buyers.</em></p>
+    </div>
+    <div class="box" data-aos="fade-up">
+      <h3>أمان وموثوقية</h3>
+      <p>نستخدم كود تحقق فريد لضمان الأمان.</p>
+      <p><em>Unique verification codes for more security.</em></p>
+    </div>
+    <div class="box" data-aos="fade-left">
+      <h3>دعم شامل</h3>
+      <p>واجهة عربية وإنجليزية تناسب الجميع مع خطط للتطوير.</p>
+      <p><em>Arabic & English interface and future updates.</em></p>
+    </div>
+    <div class="box" data-aos="fade-right">
+      <h3>تطوير مستمر</h3>
+      <p>نضيف مزايا جديدة بشكل تدريجي حسب احتياجات المستخدمين.</p>
+      <p><em>Continuous improvements based on user needs.</em></p>
+    </div>
+    <div class="box" data-aos="fade-up">
+      <h3>شفافية وأمان</h3>
+      <p>وضحنا خطوات التطبيق وسياسات حماية البيانات.</p>
+      <p><em>Clear process and data protection policies.</em></p>
+    </div>
+    <div class="box" data-aos="fade-left">
+      <h3>مزايا إضافية</h3>
+      <p>نخطط لإضافة تقييمات، تتبع الطلبات، ودعم فني.</p>
+      <p><em>Plans for reviews, order tracking, and support.</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- سكربتات -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1200 });
+
+  let attemptCount = 0;
+  let isLocked = false;
+  let generatedVerificationCode = ''; // لتخزين الكود الذي تم إنشاؤه
+  let lockTimer; // لمتغير المؤقت
+
+  // وظيفة لإظهار نافذة منبثقة
+  function showPopup(title, message, type = 'info') {
+    const overlay = document.createElement('div');
+    overlay.className = 'popup-overlay';
+
+    const content = document.createElement('div');
+    content.className = 'popup-content';
+
+    const h2 = document.createElement('h2');
+    h2.innerText = title;
+
+    const p = document.createElement('p');
+    p.innerText = message; // استخدام innerText للحفاظ على النص فقط
+
+    const closeButton = document.createElement('button');
+    closeButton.innerText = 'إغلاق | Close'; // ترجمة زر الإغلاق
+    closeButton.onclick = () => overlay.remove();
+
+    content.appendChild(h2);
+    content.appendChild(p);
+    content.appendChild(closeButton);
+    overlay.appendChild(content);
+    document.body.appendChild(overlay);
+
+    // إضافة بعض التنسيقات بناءً على النوع
+    if (type === 'success') {
+      h2.style.color = '#2ecc71';
+    } else if (type === 'error') {
+      h2.style.color = '#e74c3c';
+    } else if (type === 'warning') {
+      h2.style.color = '#f39c12';
+    }
+  }
+
+  // وظائف عرض الصفحات
+  function showPage(pageId) {
+    document.querySelectorAll('.page-section').forEach(page => {
+      page.classList.add('hidden');
+    });
+    document.getElementById(pageId).classList.remove('hidden');
+  }
+
+  function showPage1() {
+    showPage('page1');
+    // إعادة تعيين الحقول عند العودة للصفحة الرئيسية
+    document.getElementById("amountInput").value = '';
+    document.getElementById("codeInput").value = '';
+    generatedVerificationCode = ''; // مسح الكود المخزن
+    attemptCount = 0; // إعادة تعيين عداد المحاولات
+    isLocked = false; // إلغاء القفل
+    if (lockTimer) clearTimeout(lockTimer); // مسح المؤقت إذا كان نشطًا
+  }
+
+  function showClientPage() {
+    showPage('page2');
+  }
+
+  function showMerchantPage() {
+    showPage('page3');
+  }
+
+  function generateCode() {
+    const amount = document.getElementById("amountInput").value.trim();
+    if (amount === "") {
+      showPopup('خطأ | Error', 'يرجى إدخال المبلغ المطلوب تحويله | Please enter the amount to be transferred.', 'error');
+      return;
+    }
+    // إنشاء كود بسيط مكون من 6 أحرف/أرقام
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+    generatedVerificationCode = code; // تخزين الكود في متغير
+    // تم تعديل رسالة التحذير هنا
+    showPopup('كود التحقق الخاص بك | Your Verification Code', `الكود: ${code}\n\nهام: لا تشارك هذا الكود مع أي شخص أو تنساه! | Important: Do not share this code with anyone or forget it!`, 'warning');
+  }
+
+  function verifyCode() {
+    if (isLocked) {
+      showPopup('انتظار | Please Wait', 'الرجاء الانتظار 60 ثانية قبل المحاولة مجددًا | Please wait 60 seconds before trying again.', 'warning');
+      return;
+    }
+
+    const enteredCode = document.getElementById("codeInput").value.trim().toUpperCase();
+
+    if (enteredCode === "") {
+      showPopup('خطأ | Error', 'الرجاء إدخال الكود | Please enter the code.', 'error');
+      return;
+    }
+
+    // مقارنة الكود المدخل بالكود الذي تم إنشاؤه مسبقًا
+    if (enteredCode === generatedVerificationCode && generatedVerificationCode !== '') { // التأكد أن هناك كود تم إنشاؤه
+      showPopup('نجاح | Success', 'الكود مطابق! تمت العملية بنجاح وتم تحويل المبلغ.', 'success');
+      attemptCount = 0; // إعادة تعيين محاولات الخطأ عند النجاح
+      generatedVerificationCode = ''; // مسح الكود بعد التحقق الناجح
+    } else {
+      attemptCount++;
+      if (attemptCount >= 3) {
+        isLocked = true;
+        showPopup('خطأ | Error', 'الكود غير صحيح! تم الوصول للحد الأقصى للمحاولات. الرجاء الانتظار 60 ثانية قبل المحاولة مجددًا | Incorrect code! Maximum attempts reached. Please wait 60 seconds before trying again.', 'error');
+        
+        let timeLeft = 60;
+        const countdownMessage = document.createElement('p');
+        countdownMessage.id = 'countdown-message';
+        countdownMessage.style.color = '#fdfd96';
+        countdownMessage.style.marginTop = '10px';
+        countdownMessage.innerText = `الوقت المتبقي: ${timeLeft} ثانية | Time left: ${timeLeft} seconds`;
+        
+        // Find the popup content and append the countdown message
+        const currentPopup = document.querySelector('.popup-overlay .popup-content');
+        if (currentPopup) {
+            currentPopup.appendChild(countdownMessage);
+        }
+
+        lockTimer = setInterval(() => {
+            timeLeft--;
+            if (countdownMessage) {
+                countdownMessage.innerText = `الوقت المتبقي: ${timeLeft} ثانية | Time left: ${timeLeft} seconds`;
+            }
+            if (timeLeft <= 0) {
+                clearInterval(lockTimer);
+                isLocked = false;
+                attemptCount = 0;
+                showPopup('جاهز | Ready', 'يمكنك المحاولة مجددًا الآن | You can try again now.', 'info');
+                // Remove the countdown message if it exists
+                if (countdownMessage) {
+                    countdownMessage.remove();
+                }
+            }
+        }, 1000); // تحديث كل ثانية
+
+      } else {
+        // تم تعديل رسالة الخطأ هنا لتكون أكثر إيجازًا وجمالًا
+        showPopup('خطأ | Error', `الكود غير صحيح. (${attemptCount}/3 محاولات). يرجى المحاولة مرة أخرى. | Incorrect code. (${attemptCount}/3 attempts). Please try again.`, 'error');
+      }
+    }
+  }
+
+  // عند تحميل الصفحة، اظهر الصفحة الأولى
+  document.addEventListener('DOMContentLoaded', showPage1);
+</script>
+</body>
 </html>
