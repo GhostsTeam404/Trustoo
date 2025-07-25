@@ -1,4 +1,4 @@
 service : {
-  "generate_code": () -> (text) query;
-  "validate_code": (text) -> (bool);
+  "generate_code": () -> (text);         // بدون كلمة query
+  "validate_code": (text) -> (bool);     // بدون كلمة query
 }

@@ -8,7 +8,7 @@ thread_local! {
 }
 
 //  توليد كود وتخزينه
-#[ic_cdk::update]
+#[update]
 fn generate_code() -> String {
     let code = generate_simple_code(6);
 
@@ -21,7 +21,7 @@ fn generate_code() -> String {
 }
 
 //  التحقق من الكود
-#[ic_cdk::update]
+#[update]
 fn validate_code(input: String) -> bool {
     CURRENT_CODE.with(|c| {
         let mut stored = c.borrow_mut();
@@ -51,4 +51,5 @@ fn generate_simple_code(length: usize) -> String {
 
     result
 }
+ic_cdk::export_candid!();
 

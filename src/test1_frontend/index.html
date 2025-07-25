@@ -56,9 +56,7 @@
 
   <script type="module">
     import { HttpAgent, Actor } from "@dfinity/agent";
-    import { idlFactory, canisterId } from "../declarations/Trustoo_backend";
-
-    // عناصر الصفحة
+    import { idlFactory, canisterId } from "../declarations/test1_backend";
 
 
     const amountInput = document.getElementById('amount');
@@ -88,11 +86,10 @@
 
     async function init() {
       const agent = new HttpAgent();
-      await agent.fetchRootKey(); // مهم للتشغيل المحلي
+      await agent.fetchRootKey(); // ضروري للتشغيل المحلي فقط
 
       backend = Actor.createActor(idlFactory, { agent, canisterId });
 
-      // توليد كود جديد من backend
       clientForm.onsubmit = async (e) => {
         e.preventDefault();
         if (!amountInput.value || +amountInput.value < 1) {
@@ -110,10 +107,10 @@
         }
       };
 
-      // تحقق من الكود
       merchantForm.onsubmit = async (e) => {
         e.preventDefault();
         if (locked) return alert("محاولات كثيرة، يرجى الانتظار");
+
         const enteredCode = verifyCodeInput.value.trim();
 
         try {
