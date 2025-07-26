@@ -94,11 +94,9 @@ dfx deploy
 
 # 4. Serve frontend (choose one)
 cd frontend
-# Basic Python server
-python3 -m http.server 8080
-# OR if using npm
+# using npm
 npm install
-npm run dev
+npm start
 
 
 ---
