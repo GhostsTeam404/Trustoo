@@ -95,7 +95,7 @@ dfx deploy
 # 4. Serve frontend (choose one)
 cd frontend
 # using npm
-npm install
+npm install<br>
 npm start
 
 
