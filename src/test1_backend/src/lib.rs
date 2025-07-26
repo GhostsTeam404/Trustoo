@@ -1,18 +1,17 @@
 use ic_cdk::update;
 use std::cell::RefCell;
-//use std::time::{SystemTime, UNIX_EPOCH};
 
-// ⬅ متغير يخزن الكود الحالي (ذاكرة مؤقتة thread_local)
+
 thread_local! {
     static CURRENT_CODE: RefCell<Option<String>> = RefCell::new(None);
 }
 
-//  توليد كود وتخزينه
+
 #[update]
 fn generate_code() -> String {
     let code = generate_simple_code(6);
 
-    // نخزن الكود اللي اتولد
+    
     CURRENT_CODE.with(|c| {
         *c.borrow_mut() = Some(code.clone());
     });
@@ -20,14 +19,14 @@ fn generate_code() -> String {
     code
 }
 
-//  التحقق من الكود
+
 #[update]
 fn validate_code(input: String) -> bool {
     CURRENT_CODE.with(|c| {
         let mut stored = c.borrow_mut();
         if let Some(code) = &*stored {
             if code == &input {
-                *stored = None; // نلغي الكود بعد التحقق
+                *stored = None;
                 return true;
             }
         }
@@ -36,7 +35,7 @@ fn validate_code(input: String) -> bool {
 }
 
 
-//  دالة توليد الكود
+
 fn generate_simple_code(length: usize) -> String {
     let charset = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let mut result = String::new();
@@ -51,5 +50,7 @@ fn generate_simple_code(length: usize) -> String {
 
     result
 }
-ic_cdk::export_candid!();
 
+
+
+ic_cdk::export_candid!();

@@ -1,4 +1,1 @@
-service : {
-  "generate_code": () -> (text);         // بدون كلمة query
-  "validate_code": (text) -> (bool);     // بدون كلمة query
-}
+service : { generate_code : () -> (text); validate_code : (text) -> (bool) }
