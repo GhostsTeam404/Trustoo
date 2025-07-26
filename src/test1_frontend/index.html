@@ -1,166 +1,22 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Trustoo</title>
-  <style>
-    body { font-family: sans-serif; text-align: center; padding: 2rem; direction: rtl; }
-    section { display: none; }
-    section:not([hidden]) { display: block; }
-    .result { font-size: 1.2rem; margin-top: 1rem; }
-    .correct { color: green; }
-    .incorrect { color: red; }
-    button, input { padding: 0.5rem; margin: 0.5rem; font-size: 1rem; }
-    #generated-code { cursor: pointer; font-weight: bold; }
-  </style>
+  <meta name="viewport" content="width=device-width" />
+  <title>Trustoo | للثقة عنوان</title>
+  <base href="/" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" />
 </head>
+
 <body>
-
-  <h1>Trustoo</h1>
-
-  <nav>
-    <button data-page="client-page">عميل</button>
-    <button data-page="merchant-page">تاجر</button>
-  </nav>
-
-  <!-- الصفحة الرئيسية -->
-  <section id="home-page">
-    <p>مرحبًا بك في Trustoo 👋</p>
-    <p>اختر نوع المستخدم أعلاه.</p>
-  </section>
-
-  <!-- صفحة العميل -->
-  <section id="client-page">
-    <h2>العميل</h2>
-    <form id="client-form">
-      <input id="amount" type="number" placeholder="أدخل المبلغ" required />
-      <button type="submit">توليد كود</button>
-    </form>
-    <div id="code-section" hidden>
-      <p>الكود: <span id="generated-code"></span></p>
-    </div>
-    <button onclick="showPage('home-page')">رجوع</button>
-  </section>
-
-  <!-- صفحة التاجر -->
-  <section id="merchant-page">
-    <h2>التاجر</h2>
-    <form id="merchant-form">
-      <input id="verify-code" type="text" placeholder="أدخل الكود للتحقق" required />
-      <button type="submit">تحقق</button>
-    </form>
-    <div id="verify-result" class="result" hidden></div>
-    <div id="countdown" style="color:red;"></div>
-    <button onclick="showPage('home-page')">رجوع</button>
-  </section>
-
-  <script type="module">
-    import { HttpAgent, Actor } from "@dfinity/agent";
-    import { idlFactory, canisterId } from "../declarations/test1_backend";
-
-
-    const amountInput = document.getElementById('amount');
-    const codeBox = document.getElementById('generated-code');
-    const codeSection = document.getElementById('code-section');
-    const verifyCodeInput = document.getElementById('verify-code');
-    const resultBox = document.getElementById('verify-result');
-    const countdown = document.getElementById('countdown');
-    const clientForm = document.getElementById('client-form');
-    const merchantForm = document.getElementById('merchant-form');
-    const pages = document.querySelectorAll('section');
-    const buttons = document.querySelectorAll('[data-page]');
-
-    let backend;
-    let code = '';
-    let attempts = 0;
-    let locked = false;
-
-    function showPage(id) {
-      pages.forEach(p => p.hidden = true);
-      document.getElementById(id).hidden = false;
-    }
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => showPage(btn.dataset.page));
-    });
-
-    async function init() {
-      const agent = new HttpAgent();
-      await agent.fetchRootKey(); // ضروري للتشغيل المحلي فقط
-
-      backend = Actor.createActor(idlFactory, { agent, canisterId });
-
-      clientForm.onsubmit = async (e) => {
-        e.preventDefault();
-        if (!amountInput.value || +amountInput.value < 1) {
-          alert('الرجاء إدخال مبلغ صحيح');
-          return;
-        }
-
-        try {
-          code = await backend.generate_code();
-          codeBox.textContent = code;
-          codeSection.hidden = false;
-        } catch (err) {
-          console.error("خطأ في توليد الكود:", err);
-          alert('فشل في الاتصال بالخادم، حاول لاحقًا');
-        }
-      };
-
-      merchantForm.onsubmit = async (e) => {
-        e.preventDefault();
-        if (locked) return alert("محاولات كثيرة، يرجى الانتظار");
-
-        const enteredCode = verifyCodeInput.value.trim();
-
-        try {
-          const valid = await backend.validate_code(enteredCode);
-          if (valid) {
-            resultBox.textContent = "✅ تم التحقق بنجاح";
-            resultBox.className = "result correct";
-            codeSection.hidden = true;
-            code = '';
-          } else {
-            attempts++;
-            resultBox.textContent = "❌ كود غير صحيح";
-            resultBox.className = "result incorrect";
-            if (attempts >= 3) lockMerchant();
-          }
-          resultBox.hidden = false;
-        } catch (err) {
-          console.error("خطأ في التحقق:", err);
-          alert("حدث خطأ أثناء التحقق من الكود");
-        }
-      };
-
-      codeBox.addEventListener('click', () => {
-        navigator.clipboard.writeText(code).then(() => {
-          codeBox.textContent = "Copied!";
-          setTimeout(() => codeBox.textContent = code, 2000);
-        });
-      });
-
-      showPage('home-page');
-    }
-
-    function lockMerchant() {
-      locked = true;
-      let seconds = 30;
-      countdown.textContent = `يرجى الانتظار ${seconds} ثانية`;
-      const timer = setInterval(() => {
-        seconds--;
-        countdown.textContent = `يرجى الانتظار ${seconds} ثانية`;
-        if (seconds <= 0) {
-          clearInterval(timer);
-          locked = false;
-          attempts = 0;
-          countdown.textContent = '';
-        }
-      }, 1000);
-    }
-
-    window.addEventListener('DOMContentLoaded', init);
-  </script>
-
+  <div class="browser-warning">
+    ⚠️ If this page appears broken, try reloading. If the problem persists, try switching browsers; Chrome or
+    Firefox are recommended.
+  </div>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
+
 </html>
